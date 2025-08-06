@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Random Quote Generator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(120deg, #74ebd5 0%, #ACB6E5 100%);
+      transition: background 0.7s;
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 2.3em;
+      font-weight: bold;
+      letter-spacing: 2px;
+      color: #343a60;
+      text-shadow: 0 4px 24px rgba(84, 78, 213, 0.07);
+      margin-bottom: 48px;
+      animation: fadeIn 1s;
+      text-align: center;
+      user-select: none;
+    }
+    #quote-box {
+      background: rgba(255,255,255,0.93);
+      padding: 40px 50px;
+      border-radius: 18px;
+      box-shadow: 0 6px 40px 0 rgba(85, 104, 228, 0.23);
+      text-align: center;
+      min-width: 350px;
+      animation: fadeIn 0.7s;
+      margin-bottom: 18px;
+      transition: background 0.7s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    #quote-text {
+      font-size: 1.6em;
+      margin-bottom: 18px;
+      color: #333a53;
+      line-height: 1.5;
+      letter-spacing: 0.03em;
+      min-height: 40px;
+    }
+    #quote-author {
+      font-style: italic;
+      color: #5b6594;
+      margin-bottom: 30px;
+      min-height: 25px;
+    }
+    button {
+      background: linear-gradient(90deg, #536976 0%, #292e49 100%);
+      color: #fff;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: 600;
+      box-shadow: 0 2px 10px rgba(44,62,80,0.09);
+      transition: background 0.25s, transform 0.1s;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #292e49 0%, #536976 100%);
+      transform: scale(1.05);
+    }
+    .fade {
+      animation: fadeIn 0.5s;
+    }
+  </style>
+</head>
+<body>
+  <h1>Random Quote Generator</h1>
+  <div id="quote-box">
+    <p id="quote-text"></p>
+    <p id="quote-author"></p>
+    <button onclick="generateQuote()">Click to Display a Quote</button>
+  </div>
+  <script>
+    const quotes = [
+  { text: "Your only limit is you.", author: "Unknown" },
+  { text: "The effort you invest today is the pride you feel tomorrow.", author: "Unknown" },
+  { text: "Success isn’t always about greatness. It’s about consistency. Consistent hard work gains success. Greatness will come.", author: "Dwayne Johnson" },
+  { text: "Don’t stop when you’re tired. Stop when you’re done.", author: "Unknown" },
+  { text: "Push your limits, it’s up to you.", author: "Unknown" },
+  { text: "Sweat is your body transforming.", author: "Unknown" },
+  { text: "The only bad workout is the one you skip.", author: "Unknown" },
+  { text: "Today’s challenges are tomorrow’s routines.", author: "Unknown" },
+  { text: "Your mind is the key to your body’s strength.", author: "Unknown" },
+  { text: "Fitness is a battle between you and yourself.", author: "Unknown" },
+  { text: "Start your day with a goal and end it with a victory.", author: "Unknown" },
+  { text: "The pain you feel today is the progress you make tomorrow.", author: "Unknown" },
+  { text: "Do something today that your future self will thank you for.", author: "Unknown" },
+  { text: "Once you see results, it becomes an addiction.", author: "Unknown" },
+  { text: "Effort yields rewards.", author: "Unknown" },
+  { text: "Test your limits and grow.", author: "Unknown" },
+  { text: "Exercise is labor without weariness.", author: "Samuel Johnson" },
+  { text: "Motivation starts the journey, habit sustains it.", author: "Unknown" },
+  { text: "Success comes from mastering failure.", author: "Unknown" },
+  { text: "Commit to fitness like a relationship.", author: "Unknown" },
+  { text: "No matter how slow you go, you are still lapping everybody on the couch.", author: "Unknown" },
+  { text: "Today’s actions create tomorrow’s success.", author: "Unknown" },
+  { text: "Believe in yourself and all that you are. Know that there is something inside you that is greater than any obstacle.", author: "Christian D. Larson" },
+  { text: "Sweat now, shine later.", author: "Unknown" },
+  { text: "Push your limits or stay where you are.", author: "Unknown" }
+];
+
+
+    // Gradient pairs for page AND box
+    const bgGradients = [
+      { body: ['#A770EF', '#FDB99B'], box: ['#f6d365', '#fda085'] },
+      { body: ['#43cea2', '#185a9d'], box: ['#56ccf2', '#2f80ed'] },
+      { body: ['#BFF098', '#6FD6FF'], box: ['#c2e9fb', '#81a4fd'] },
+      { body: ['#C33764', '#1D2671'], box: ['#816e94', '#9fa2f7'] },
+      { body: ['#F7971E', '#FFD200'], box: ['#fceabb', '#f8b500'] },
+      { body: ['#e1eec3', '#f05053'], box: ['#faaca8', '#ddd6f3'] },
+      { body: ['#8EC5FC', '#E0C3FC'], box: ['#f093fb', '#f5576c'] },
+      { body: ['#ffecd2', '#fcb69f'], box: ['#a1c4fd', '#c2e9fb'] }
+    ];
+
+    function randomIndex(arr) {
+      return Math.floor(Math.random() * arr.length);
+    }
+
+    function generateQuote() {
+      const i = randomIndex(quotes);
+
+      document.getElementById("quote-text").innerText = quotes[i].text;
+      document.getElementById("quote-author").innerText = "— " + quotes[i].author;
+      document.querySelector("button").innerText = "New Quote";
+
+      let box = document.getElementById("quote-box");
+      box.classList.remove('fade');
+      void box.offsetWidth;
+      box.classList.add('fade');
+
+      // Page & box color transition
+      const colors = bgGradients[randomIndex(bgGradients)];
+      document.body.style.background = `linear-gradient(120deg, ${colors.body[0]} 0%, ${colors.body[1]} 100%)`;
+      box.style.background = `linear-gradient(120deg, ${colors.box[0]} 0%, ${colors.box[1]} 100%)`;
+    }
+
+    window.onload = function() {
+      document.getElementById("quote-text").innerText = "";
+      document.getElementById("quote-author").innerText = "";
+      document.querySelector("button").innerText = "Click to Display a Quote";
+      // Initial pleasant color
+      document.body.style.background = "linear-gradient(120deg, #74ebd5 0%, #ACB6E5 100%)";
+      document.getElementById("quote-box").style.background = "rgba(255,255,255,0.93)";
+    };
+  </script>
+</body>
+</html>
